@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <dirent.h>
+#include <ncurses.h>
 
 #define MX_MAX_LVL_NAME     20
 #define MX_LVL_DIR          "resource/level"
