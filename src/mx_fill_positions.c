@@ -21,17 +21,17 @@ static void parse_map(int fd, char ch, int pos_count, t_lvl **lvl) {
     for (x = 0, y = 0; read(fd, &ch, 1); x++, y += ch == '\n' ? !(x = 0) : 0) {
         if (ch == MX_BOX_CHAR && box_idx < pos_count) {
             (*lvl)->box_pos[box_idx] = malloc(sizeof(int) * 2);
-            (*lvl)->box_pos[box_idx][0] = y;
-            (*lvl)->box_pos[box_idx][1] = x;
+            (*lvl)->box_pos[box_idx][MX_Y] = y;
+            (*lvl)->box_pos[box_idx][MX_X] = x;
             box_idx++;
         } else if (ch == MX_BTN_CHAR) {
             (*lvl)->btn_pos[btn_idx] = malloc(sizeof(int) * 2);
-            (*lvl)->btn_pos[btn_idx][0] = y;
-            (*lvl)->btn_pos[btn_idx][1] = x;
+            (*lvl)->btn_pos[btn_idx][MX_Y] = y;
+            (*lvl)->btn_pos[btn_idx][MX_X] = x;
             btn_idx++;
         } else if (ch == MX_PLAYER_CHAR) {
-            (*lvl)->start_pos[0] = y;
-            (*lvl)->start_pos[1] = x;
+            (*lvl)->player_pos[MX_Y] = y;
+            (*lvl)->player_pos[MX_X] = x;
         }
     }
 }

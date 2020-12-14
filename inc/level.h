@@ -23,7 +23,7 @@ typedef struct s_lvl {
     char **map;
     int **box_pos;
     int **btn_pos;
-    int start_pos[2];
+    int player_pos[2];
 }              t_lvl;
 
 t_lvl *mx_create_lvl(char *filename);
@@ -32,3 +32,5 @@ void mx_fill_map(int fd, t_lvl *lvl);
 void mx_fill_positions(char *filename, t_lvl **lvl);
 void mx_delete_lvl(t_lvl **lvl);
 void mx_delete_lvls(t_lvl ***lvl);
+
+void mx_print_lvl(t_lvl *lvl);  // TODO: Delete
