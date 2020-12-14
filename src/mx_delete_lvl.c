@@ -22,9 +22,10 @@ void mx_delete_lvl(t_lvl **lvl) {
 }
 
 void mx_delete_lvls(t_lvl ***lvl) {
-//    if (*lvl) {
-//        for (int i = 0; (*lvl)[i]; i++) {
-//            mx_delete_lvl(&(*lvl)[0]);
-//        }
-//    }
+    if (*lvl) {
+        for (int i = 0; (*lvl)[i]; i++)
+            mx_delete_lvl(&(*lvl)[i]);
+        free(*lvl);
+        *lvl = NULL;
+    }
 }

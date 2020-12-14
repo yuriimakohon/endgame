@@ -10,7 +10,6 @@ static void print_lvl(t_lvl *lvl) {
 
 static void test(void) {
     t_lvl **lvls = mx_create_lvls();
-//    print_lvl(lvls[1]);
     mx_delete_lvls(&lvls);
 }
 
