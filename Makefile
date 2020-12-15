@@ -1,5 +1,5 @@
 CC = clang
-CLAGS = -Wall -Wextra -Werror -Wpedantic -lncurses
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -lncurses
 
 NAME = endgame
 
@@ -12,7 +12,7 @@ SRCC = $(addprefix $(SRCD)/, *.c)
 all: install
 
 install:
-	@$(CC) $(CFLAGS) $(SRCC) -I $(INCD) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCC) -I $(INCD) -o $(NAME)
 
 uninstall:
 	rm -rf $(NAME)
