@@ -1,25 +1,31 @@
-#include "../inc/gameplay.h"
-#include <ncurses.h>
-#include "../inc/level.h"
+#include "gameplay.h"
 
-void gameplay() {
+
+void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
     initscr();
     noecho();
 
-    
+    int y_max = map_size_y;
+    int x_max = map_size_x;
 
-    int x_max = 26;
-    int y_max = 8;
+    int y = (*level) -> player_pos[1];
+    int x = (*level) -> player_pos[0];
+
+
+
+
+//    int x_max = 26;
+//    int y_max = 8;
 
 //    int wall_x = 6;
 //    int wall_y = 6;
 
-    int x_start = 19;
-    int y_start = 5;
+//    int x_start = 19;
+//    int y_start = 5;
 
-    int x = x_start;
-    int y = y_start;
-
+//    int x = x_start;
+//    int y = y_start;
+/*
     char map[8][26] = {
         {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
         {'#',' ',MX_BTN_CHAR,'#','#',' ',' ','X',' ',' ',' ',MX_BTN_CHAR,'#','#',' ',' ',' ','#',' ',' ',' ','#','#','#','#','#'},
@@ -30,7 +36,7 @@ void gameplay() {
         {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
         {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
     };    
-
+*/
     WINDOW *game_window = newwin(y_max, x_max, 2, 5);
     keypad(game_window, TRUE);
     curs_set(0);
@@ -39,7 +45,7 @@ void gameplay() {
         for(int i=0; i<8; i++) {
             for(int j=0; j<26; j++) {
                 wmove(game_window, i, j);
-                waddch(game_window, map[i][j]);
+                waddch(game_window, (*level) -> map[i][j]);
             }
         }
         wmove(game_window, y, x);
@@ -48,13 +54,13 @@ void gameplay() {
         int ch = wgetch(game_window);
         if (ch == KEY_DOWN) {
             if(y+1 < y_max) {
-                if (map[y+1][x] == ' ' || map[y+1][x] == MX_BTN_CHAR) {
+                if ((*level) -> map[y+1][x] == ' ' || (*level) -> map[y+1][x] == MX_BTN_CHAR) {
                     y++;
                 }
-                else if(map[y+1][x] == MX_BOX_CHAR) {
-                    if((map[y+2][x] == ' ' || map[y+2][x] == MX_BTN_CHAR) && y+2 < y_max) {
-                        map[y+2][x] = MX_BOX_CHAR;
-                        map[y+1][x] = ' ';
+                else if((*level) -> map[y+1][x] == MX_BOX_CHAR) {
+                    if(((*level) -> map[y+2][x] == ' ' || (*level) -> map[y+2][x] == MX_BTN_CHAR) && y+2 < y_max) {
+                        (*level) -> map[y+2][x] = MX_BOX_CHAR;
+                        (*level) -> map[y+1][x] = ' ';
                         y++;
                     }
                 }
@@ -62,13 +68,13 @@ void gameplay() {
         }
         if (ch == KEY_UP){
             if(y > 0) {
-                if (map[y-1][x] == ' ' || map[y-1][x] == MX_BTN_CHAR) {
+                if ((*level) -> map[y-1][x] == ' ' || (*level) -> map[y-1][x] == MX_BTN_CHAR) {
                     y--;
                 }
-                else if(map[y-1][x] == MX_BOX_CHAR) {
-                    if((map[y-2][x] == ' ' || map[y-2][x] == MX_BTN_CHAR) && y-2 > 0) {
-                        map[y-2][x] = MX_BOX_CHAR;
-                        map[y-1][x] = ' ';
+                else if((*level) -> map[y-1][x] == MX_BOX_CHAR) {
+                    if(((*level) -> map[y-2][x] == ' ' || (*level) -> map[y-2][x] == MX_BTN_CHAR) && y-2 > 0) {
+                        (*level) -> map[y-2][x] = MX_BOX_CHAR;
+                        (*level) -> map[y-1][x] = ' ';
                         y--;
                     }
                 }
@@ -76,13 +82,13 @@ void gameplay() {
         }
         if (ch == KEY_LEFT) {
             if(x > 0) {
-                if (map[y][x-1] == ' ' || map[y][x-1] == MX_BTN_CHAR) {
+                if ((*level) -> map[y][x-1] == ' ' || (*level) -> map[y][x-1] == MX_BTN_CHAR) {
                     x--;
                 }
-                else if(map[y][x-1] == MX_BOX_CHAR) {
-                    if((map[y][x-2] == ' ' || map[y][x-2] == MX_BTN_CHAR) && x-2 > 0) {
-                        map[y][x-2] = MX_BOX_CHAR;
-                        map[y][x-1] = ' ';
+                else if((*level) -> map[y][x-1] == MX_BOX_CHAR) {
+                    if(((*level) -> map[y][x-2] == ' ' || (*level) -> map[y][x-2] == MX_BTN_CHAR) && x-2 > 0) {
+                        (*level) -> map[y][x-2] = MX_BOX_CHAR;
+                        (*level) -> map[y][x-1] = ' ';
                         x--;
                     }
                 }
@@ -90,13 +96,13 @@ void gameplay() {
         }
         if (ch == KEY_RIGHT) {
             if(x+1 < x_max) {
-                if (map[y][x+1] == ' ' || map[y][x+1] == MX_BTN_CHAR) {
+                if ((*level) -> map[y][x+1] == ' ' || (*level) -> map[y][x+1] == MX_BTN_CHAR) {
                     x++;
                 }
-                else if(map[y][x+1] == MX_BOX_CHAR) {
-                    if((map[y][x+2] == ' ' || map[y][x+2] == MX_BTN_CHAR) && x+2 < x_max) {
-                        map[y][x+2] = MX_BOX_CHAR;
-                        map[y][x+1] = ' ';
+                else if((*level) -> map[y][x+1] == MX_BOX_CHAR) {
+                    if(((*level) -> map[y][x+2] == ' ' || (*level) -> map[y][x+2] == MX_BTN_CHAR) && x+2 < x_max) {
+                        (*level) -> map[y][x+2] = MX_BOX_CHAR;
+                        (*level) -> map[y][x+1] = ' ';
                         x++;
                     }
                 }
@@ -147,19 +153,6 @@ void gameplay() {
     delwin(game_window);
     endwin();
 }
-
-
-
-int main () {
-    gameplay();
-}
-
-void print_map() {
-
-}
-
-
-
 
 /*
 // void gameplay (t_lvl *level) {

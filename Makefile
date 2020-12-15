@@ -1,5 +1,5 @@
 CC = clang
-CLAGS = -Wall -Wextra -Werror -Wpedantic -lncurses
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -lncurses
 
 NAME = endgame
 
