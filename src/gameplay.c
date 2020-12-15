@@ -6,35 +6,119 @@ void gameplay() {
     initscr();
     noecho();
 
-    int x = 5;
-    int y = 5;
+    
 
     int x_max = 26;
     int y_max = 8;
 
-//    int x_start = 5;
-//    int y_start = 5;
+//    int wall_x = 6;
+//    int wall_y = 6;
 
-    WINDOW *game_window = newwin(y_max, x_max, 5, 5);
+    int x_start = 19;
+    int y_start = 5;
+
+    int x = x_start;
+    int y = y_start;
+
+    char map[8][26] = {
+        {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+        {'#',' ','0','#','#',' ',' ','X',' ',' ',' ','0','#','#',' ',' ',' ','#',' ',' ',' ','#','#','#','#','#'},
+        {'#',' ','X','#','#',' ',' ',' ',' ',' ',' ',' ','#','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#'},
+        {'#',' ',' ',' ',' ',' ',' ',' ','X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        {'#',' ',' ','#',' ',' ',' ',' ','0',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+        {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
+    };    
+
+    WINDOW *game_window = newwin(y_max, x_max, 2, 5);
     keypad(game_window, TRUE);
+    curs_set(0);
+
+
+/*
+    for(int i=0; i<8; i++) {
+        for(int j=0; j<26; j++) {
+            wmove(game_window, i, j);
+            waddch(game_window, map[i][j]);
+        }
+    }
+*/
 
     for( ;; ) {
-        curs_set(0);
+        for(int i=0; i<8; i++) {
+            for(int j=0; j<26; j++) {
+                wmove(game_window, i, j);
+                waddch(game_window, map[i][j]);
+            }
+        }
         wmove(game_window, y,x);
-        waddch(game_window, 'X');
+        waddch(game_window, '@');
+
         int ch = wgetch(game_window);
-        if (ch == KEY_DOWN && y+1 < y_max) {
-            y++;
+        if (ch == KEY_DOWN) {
+            if(y+1 < y_max) {
+                if (map[y+1][x] != '#') {
+                    y++;
+                }
+            }
         }
-        if (ch == KEY_UP && y-1 > 0) {
-            y--;
+        if (ch == KEY_UP){
+            if(y > 0) {
+                if (map[y-1][x] != '#') {
+                    y--;
+                }
+            }
         }
-        if (ch == KEY_LEFT && x-1 > 0) {
-            x--;
+        if (ch == KEY_LEFT) {
+            if(x > 0) {
+                if (map[y][x-1] != '#') {
+                    x--;
+                }
+            }
         }
-        if (ch == KEY_RIGHT && x+1 < x_max) {
-            x++;
+        if (ch == KEY_RIGHT) {
+            if(x+1 < x_max) {
+                if (map[y][x+1] != '#') {
+                    x++;
+                }
+            }
         }
+/*
+        int ch = wgetch(game_window);
+        if (ch == KEY_DOWN) {
+            if(y+1 < y_max) {
+                if (!(y+1 == wall_y && x == wall_x)) {
+                    y++;
+                }
+            }
+        }
+        
+        if (ch == KEY_UP){
+            if(y > 0) {
+                if (!(y-1 == wall_y && x == wall_x)) {
+                    y--;
+                }
+            }
+        }
+        
+        if (ch == KEY_LEFT) {
+            if(x > 0) {
+                if (!(y == wall_y && x-1 == wall_x)) {
+                    x--;
+                }
+            }
+        }
+        
+        if (ch == KEY_RIGHT) {
+            if(x+1 < x_max) {
+                if (!(y == wall_y && x+1 == wall_x)) {
+                    x++;
+                }
+            }
+        }
+*/
+
         if (ch == 'q') {
             break;
         }
@@ -52,7 +136,9 @@ int main () {
     gameplay();
 }
 
-//void 
+void print_map() {
+
+}
 
 
 
