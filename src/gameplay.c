@@ -12,9 +12,11 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
 
     (*level) -> map[y][x] = ' ';    // hide start position
 
- //   for(int i = 0; (*level) -> btn_pos; i++) {
- //       (*level) -> map[(*level) -> btn_pos[i][0]][(*level) -> btn_pos[i][1]] = ' ';
- // }
+    int btn_counter = 0;
+
+    for(int i = 0; (*level) -> btn_pos[i]; i++) {
+        btn_counter++;
+    }
 
     WINDOW *game_window = newwin(y_max, x_max, 2, 5);
     keypad(game_window, TRUE);
@@ -27,10 +29,10 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
             }
         }
 
-        for (int i=0; (*level) -> btn_pos[i]; i++) {
-            wmove(game_window, (*level) -> btn_pos[i][0], (*level) -> btn_pos[i][1]);
-            waddch(game_window, MX_BTN_CHAR);
-        }
+//        for (int i=0; (*level) -> btn_pos[i]; i++) {
+//            wmove(game_window, (*level) -> btn_pos[i][0], (*level) -> btn_pos[i][1]);
+//            waddch(game_window, MX_BTN_CHAR);
+//        }
         
         wmove(game_window, y, x);
         waddch(game_window, MX_PLAYER_CHAR);
@@ -41,13 +43,27 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
                 if ((*level) -> map[y+1][x] == ' ' || (*level) -> map[y+1][x] == MX_BTN_CHAR) {
                     y++;
                 }
+
                 else if((*level) -> map[y+1][x] == MX_BOX_CHAR) {
-                    if(((*level) -> map[y+2][x] == ' ' || (*level) -> map[y+2][x] == MX_BTN_CHAR) && y+2 < y_max) {
+                    if((*level) -> map[y+2][x] == ' ' && y+2 < y_max) {
                         (*level) -> map[y+2][x] = MX_BOX_CHAR;
                         (*level) -> map[y+1][x] = ' ';
                         y++;
                     }
+                    else if((*level) -> map[y+2][x] == MX_BTN_CHAR && y+2 < y_max) {
+                        (*level) -> map[y+2][x] = 'x';
+                        (*level) -> map[y+1][x] = ' ';
+                        btn_counter--;
+                        y++;
+                    }
                 }
+                // else if((*level) -> map[y+1][x] == MX_BOX_CHAR) {
+                //     if(((*level) -> map[y+2][x] == ' ' || (*level) -> map[y+2][x] == MX_BTN_CHAR) && y+2 < y_max) {
+                //         (*level) -> map[y+2][x] = MX_BOX_CHAR;
+                //         (*level) -> map[y+1][x] = ' ';
+                //         y++;
+                //     }
+                // }
             }
         }
         if (ch == KEY_UP){
@@ -56,9 +72,15 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
                     y--;
                 }
                 else if((*level) -> map[y-1][x] == MX_BOX_CHAR) {
-                    if(((*level) -> map[y-2][x] == ' ' || (*level) -> map[y-2][x] == MX_BTN_CHAR) && y-2 > 0) {
+                    if((*level) -> map[y-2][x] == ' ' && y-2 > 0) {
                         (*level) -> map[y-2][x] = MX_BOX_CHAR;
                         (*level) -> map[y-1][x] = ' ';
+                        y--;
+                    }
+                    else if((*level) -> map[y-2][x] == MX_BTN_CHAR && y-2 > 0) {
+                        (*level) -> map[y-2][x] = 'x';
+                        (*level) -> map[y-1][x] = ' ';
+                        btn_counter--;
                         y--;
                     }
                 }
@@ -70,9 +92,15 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
                     x--;
                 }
                 else if((*level) -> map[y][x-1] == MX_BOX_CHAR) {
-                    if(((*level) -> map[y][x-2] == ' ' || (*level) -> map[y][x-2] == MX_BTN_CHAR) && x-2 > 0) {
+                    if((*level) -> map[y][x-2] == ' ' && x-2 > 0) {
                         (*level) -> map[y][x-2] = MX_BOX_CHAR;
                         (*level) -> map[y][x-1] = ' ';
+                        x--;
+                    }
+                    else if((*level) -> map[y][x-2] == MX_BTN_CHAR && x-2 > 0) {
+                        (*level) -> map[y][x-2] = 'x';
+                        (*level) -> map[y][x-1] = ' ';
+                        btn_counter--;
                         x--;
                     }
                 }
@@ -84,15 +112,24 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
                     x++;
                 }
                 else if((*level) -> map[y][x+1] == MX_BOX_CHAR) {
-                    if(((*level) -> map[y][x+2] == ' ' || (*level) -> map[y][x+2] == MX_BTN_CHAR) && x+2 < x_max) {
+                    if((*level) -> map[y][x+2] == ' ' && x+2 < x_max) {
                         (*level) -> map[y][x+2] = MX_BOX_CHAR;
                         (*level) -> map[y][x+1] = ' ';
+                        x++;
+                    }
+                    else if((*level) -> map[y][x+2] == MX_BTN_CHAR && x+2 < x_max) {
+                        (*level) -> map[y][x+2] = 'x';
+                        (*level) -> map[y][x+1] = ' ';
+                        btn_counter--;
                         x++;
                     }
                 }
             }
         }
         if (ch == 'q') {
+            break;
+        }
+        if (btn_counter == 0) {
             break;
         }
     }
