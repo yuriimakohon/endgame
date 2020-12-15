@@ -3,7 +3,7 @@
 static int get_box_count(char *filename) {
     int fd;
     char ch;
-    int count;
+    int count = 0;
 
     if ((fd = open(filename, O_RDONLY)) != -1) {
         for (count = 0; read(fd, &ch, 1); count += ch == MX_BOX_CHAR ? 1 : 0);

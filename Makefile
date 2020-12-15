@@ -12,7 +12,7 @@ SRCC = $(addprefix $(SRCD)/, *.c)
 all: install
 
 install:
-	@$(CC) $(CFLAGS) $(SRCC) -I $(INCD) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCC) -I $(INCD) -o $(NAME)
 
 uninstall:
 	rm -rf $(NAME)
