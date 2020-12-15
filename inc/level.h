@@ -34,4 +34,6 @@ void mx_fill_positions(char *filename, t_lvl **lvl);
 void mx_delete_lvl(t_lvl **lvl);
 void mx_delete_lvls(t_lvl ***lvl);
 
+void gameplay(t_lvl **level, int map_size_y, int map_size_x);
+
 void mx_print_lvl(t_lvl *lvl);  // TODO: Delete
