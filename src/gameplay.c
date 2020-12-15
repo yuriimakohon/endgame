@@ -35,16 +35,6 @@ void gameplay() {
     keypad(game_window, TRUE);
     curs_set(0);
 
-
-/*
-    for(int i=0; i<8; i++) {
-        for(int j=0; j<26; j++) {
-            wmove(game_window, i, j);
-            waddch(game_window, map[i][j]);
-        }
-    }
-*/
-
     for( ;; ) {
         for(int i=0; i<8; i++) {
             for(int j=0; j<26; j++) {
@@ -62,9 +52,10 @@ void gameplay() {
                     y++;
                 }
                 else if(map[y+1][x] == MX_BOX_CHAR) {
-                    if(map[y+2][x] == ' ' && y+2 < y_max) {
+                    if((map[y+2][x] == ' ' || map[y+2][x] == MX_BTN_CHAR) && y+2 < y_max) {
+                        map[y+2][x] = MX_BOX_CHAR;
+                        map[y+1][x] = ' ';
                         y++;
-
                     }
                 }
             }
@@ -74,6 +65,13 @@ void gameplay() {
                 if (map[y-1][x] == ' ' || map[y-1][x] == MX_BTN_CHAR) {
                     y--;
                 }
+                else if(map[y-1][x] == MX_BOX_CHAR) {
+                    if((map[y-2][x] == ' ' || map[y-2][x] == MX_BTN_CHAR) && y-2 > 0) {
+                        map[y-2][x] = MX_BOX_CHAR;
+                        map[y-1][x] = ' ';
+                        y--;
+                    }
+                }
             }
         }
         if (ch == KEY_LEFT) {
@@ -81,12 +79,26 @@ void gameplay() {
                 if (map[y][x-1] == ' ' || map[y][x-1] == MX_BTN_CHAR) {
                     x--;
                 }
+                else if(map[y][x-1] == MX_BOX_CHAR) {
+                    if((map[y][x-2] == ' ' || map[y][x-2] == MX_BTN_CHAR) && x-2 > 0) {
+                        map[y][x-2] = MX_BOX_CHAR;
+                        map[y][x-1] = ' ';
+                        x--;
+                    }
+                }
             }
         }
         if (ch == KEY_RIGHT) {
             if(x+1 < x_max) {
                 if (map[y][x+1] == ' ' || map[y][x+1] == MX_BTN_CHAR) {
                     x++;
+                }
+                else if(map[y][x+1] == MX_BOX_CHAR) {
+                    if((map[y][x+2] == ' ' || map[y][x+2] == MX_BTN_CHAR) && x+2 < x_max) {
+                        map[y][x+2] = MX_BOX_CHAR;
+                        map[y][x+1] = ' ';
+                        x++;
+                    }
                 }
             }
         }
@@ -129,7 +141,7 @@ void gameplay() {
             break;
         }
         
-        wclear(game_window);
+//        wclear(game_window);
         wrefresh(game_window);
     }
     delwin(game_window);
