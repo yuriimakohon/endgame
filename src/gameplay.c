@@ -7,46 +7,31 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
     int y_max = map_size_y;
     int x_max = map_size_x;
 
-    int y = (*level) -> player_pos[1];
-    int x = (*level) -> player_pos[0];
+    int y = (*level) -> player_pos[0];
+    int x = (*level) -> player_pos[1];
 
+    (*level) -> map[y][x] = ' ';    // hide start position
 
+ //   for(int i = 0; (*level) -> btn_pos; i++) {
+ //       (*level) -> map[(*level) -> btn_pos[i][0]][(*level) -> btn_pos[i][1]] = ' ';
+ // }
 
-
-//    int x_max = 26;
-//    int y_max = 8;
-
-//    int wall_x = 6;
-//    int wall_y = 6;
-
-//    int x_start = 19;
-//    int y_start = 5;
-
-//    int x = x_start;
-//    int y = y_start;
-/*
-    char map[8][26] = {
-        {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
-        {'#',' ',MX_BTN_CHAR,'#','#',' ',' ','X',' ',' ',' ',MX_BTN_CHAR,'#','#',' ',' ',' ','#',' ',' ',' ','#','#','#','#','#'},
-        {'#',' ','X','#','#',' ',' ',' ',' ',' ',' ',' ','#','#',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#'},
-        {'#',' ',' ',' ',' ',' ',' ',' ','X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ','#',' ',' ',' ',' ',MX_BTN_CHAR,' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-        {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
-    };    
-*/
     WINDOW *game_window = newwin(y_max, x_max, 2, 5);
     keypad(game_window, TRUE);
-    curs_set(0);
 
     for( ;; ) {
-        for(int i=0; i<8; i++) {
-            for(int j=0; j<26; j++) {
+        for(int i=0; i<map_size_y; i++) {
+            for(int j=0; j<map_size_x; j++) {
                 wmove(game_window, i, j);
                 waddch(game_window, (*level) -> map[i][j]);
             }
         }
+
+        for (int i=0; (*level) -> btn_pos[i]; i++) {
+            wmove(game_window, (*level) -> btn_pos[i][0], (*level) -> btn_pos[i][1]);
+            waddch(game_window, MX_BTN_CHAR);
+        }
+        
         wmove(game_window, y, x);
         waddch(game_window, MX_PLAYER_CHAR);
 
@@ -107,98 +92,9 @@ void gameplay(t_lvl **level, int map_size_y, int map_size_x) {
                 }
             }
         }
-/*
-        int ch = wgetch(game_window);
-        if (ch == KEY_DOWN) {
-            if(y+1 < y_max) {
-                if (!(y+1 == wall_y && x == wall_x)) {
-                    y++;
-                }
-            }
-        }
-        
-        if (ch == KEY_UP){
-            if(y > 0) {
-                if (!(y-1 == wall_y && x == wall_x)) {
-                    y--;
-                }
-            }
-        }
-        
-        if (ch == KEY_LEFT) {
-            if(x > 0) {
-                if (!(y == wall_y && x-1 == wall_x)) {
-                    x--;
-                }
-            }
-        }
-        
-        if (ch == KEY_RIGHT) {
-            if(x+1 < x_max) {
-                if (!(y == wall_y && x+1 == wall_x)) {
-                    x++;
-                }
-            }
-        }
-*/
-
         if (ch == 'q') {
             break;
         }
-        
-//        wclear(game_window);
-        wrefresh(game_window);
     }
     delwin(game_window);
-    endwin();
 }
-
-/*
-// void gameplay (t_lvl *level) {
-void gameplay() {
-
-    int x = 6;
-    int y = 6;
-
-    initscr();
-//    curs_set(0);
-//    refresh();
-    
-//    start_color();
-//    init_pair(1, COLOR_MAGENTA, COLOR_BLACK);
-
-    WINDOW *game_window = newwin(8, 26, 5, 5);
-    keypad(game_window, TRUE);
-//    box(game_window, 1, 2);
-
-//    wattron(game_window, COLOR_PAIR(1));
-//    wmove(game_window, 6, 6);
-//    waddch(game_window, 'X');
-
- //   noecho();
-//    wrefresh(game_window);
-    
-    for ( ;; ) {
-        wmove(game_window, y, x);
-        wprintw(game_window, "X");
-
-        int ch = getch();
-        if (ch == KEY_DOWN)  y++;
-        if (ch == KEY_UP)    y--;
-        if (ch == KEY_LEFT)  x--;
-        if (ch == KEY_RIGHT) x++;
-        wclear(game_window);
-        wrefresh(game_window);
-        noecho();
-    }
-    
-    
-
-    delwin(game_window);
-    endwin();
-}
-
-int main() {
-    gameplay();
-}
-*/

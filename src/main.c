@@ -17,4 +17,5 @@ int main(void) {
     // system("leaks -q endgame");
    t_lvl *level = mx_create_lvl("resource/level/lvl_1");
    gameplay(&level, 8, 26);
+   endwin();
 }
