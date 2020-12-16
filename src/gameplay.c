@@ -27,6 +27,10 @@ int gameplay(char *filename) {
 
     WINDOW *game_window = newwin(y_max, x_max, 2, 5);
     keypad(game_window, TRUE);
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(3, COLOR_RED, COLOR_BLACK);
 
     for( ;; ) {
         for(int i=0; i<y_max; i++) {
@@ -37,14 +41,21 @@ int gameplay(char *filename) {
         }
         for (int i=0; level -> btn_pos[i]; i++) {
             wmove(game_window, level -> btn_pos[i][0], level -> btn_pos[i][1]);
+            wattron(game_window, COLOR_PAIR(2));
             waddch(game_window, MX_BTN_CHAR);
+            wattroff(game_window, COLOR_PAIR(2));
         }
         for (int i=0; level -> box_pos[i]; i++) {
             wmove(game_window, level -> box_pos[i][0], level -> box_pos[i][1]);
+            wattron(game_window, COLOR_PAIR(3));
             waddch(game_window, MX_BOX_CHAR);
+            wattron(game_window, COLOR_PAIR(3));
         }
         wmove(game_window, y, x);
+        
+        wattron(game_window, COLOR_PAIR(1));
         waddch(game_window, MX_PLAYER_CHAR);
+        wattroff(game_window, COLOR_PAIR(1));
 
         int ch = wgetch(game_window);
 
