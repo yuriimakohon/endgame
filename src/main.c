@@ -9,7 +9,6 @@ void mx_init_ncurses() {
 static void test(void) {
     t_lvl **lvls = mx_create_lvls();
     mx_print_lvl(lvls[0]);
-    getch();
     mx_delete_lvls(&lvls);
 }
 
