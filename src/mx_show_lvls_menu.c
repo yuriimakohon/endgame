@@ -42,8 +42,9 @@ static void choose_lvl(WINDOW *w, t_lvl **lvls, int count) {
             clear();
             refresh();
             if (steps != -2) {
-                printw("POBEDA: %d", steps);
-                getch();
+                level_complete_sign(steps);
+                // printw("POBEDA: %d", steps);
+                // getch();
             }
         }
         else if (ch == 27)

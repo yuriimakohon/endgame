@@ -46,3 +46,5 @@ void hide_char(t_lvl *level, char c, int map_size_y, int map_size_x);
 void mx_show_main_menu(t_lvl **lvls);
 void mx_show_lvls_menu(t_lvl **lvls);
 void mx_print_lvl(t_lvl *lvl);  // TODO: Delete
+
+void level_complete_sign(int steps);

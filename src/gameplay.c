@@ -30,13 +30,20 @@ int gameplay(char *filename) {
     start_color();
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(3, COLOR_RED, COLOR_BLACK);
+    init_pair(3, COLOR_BLACK, COLOR_RED);
+    init_pair(4, COLOR_WHITE, COLOR_WHITE);
 
     for( ;; ) {
         for(int i=0; i<y_max; i++) {
             for(int j=0; j<x_max; j++) {
                 wmove(game_window, i, j);
-                waddch(game_window, level -> map[i][j]);
+                if (level -> map[i][j] == '#') {
+                    wattron(game_window, COLOR_PAIR(4));
+                    waddch(game_window, '#');
+                    wattroff(game_window, COLOR_PAIR(4));
+                }
+                else
+                    waddch(game_window, level -> map[i][j]);
             }
         }
         for (int i=0; level -> btn_pos[i]; i++) {
@@ -49,7 +56,7 @@ int gameplay(char *filename) {
             wmove(game_window, level -> box_pos[i][0], level -> box_pos[i][1]);
             wattron(game_window, COLOR_PAIR(3));
             waddch(game_window, MX_BOX_CHAR);
-            wattron(game_window, COLOR_PAIR(3));
+            wattroff(game_window, COLOR_PAIR(3));
         }
         wmove(game_window, y, x);
         
