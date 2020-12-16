@@ -36,11 +36,11 @@ void mx_fill_positions(char *filename, t_lvl **lvl);
 void mx_delete_lvl(t_lvl **lvl);
 void mx_delete_lvls(t_lvl ***lvl);
 
-void gameplay(t_lvl **level, int map_size_y, int map_size_x);
-bool check_btn(t_lvl **level, int y, int x);
-bool check_box(t_lvl **level, int y, int x);
-void move_box(t_lvl **level, int y_now, int x_now, int y_step, int x_step);
-void hide_char(t_lvl **level, char c, int map_size_y, int map_size_x);
+void gameplay(t_lvl *level);
+bool check_btn(t_lvl *level, int y, int x);
+bool check_box(t_lvl *level, int y, int x);
+void move_box(t_lvl *level, int y_now, int x_now, int y_step, int x_step);
+void hide_char(t_lvl *level, char c, int map_size_y, int map_size_x);
 
 void mx_show_main_menu(t_lvl **lvls);
 void mx_show_lvls_menu(t_lvl **lvls);
