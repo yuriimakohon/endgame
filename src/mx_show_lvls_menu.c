@@ -22,24 +22,27 @@ static void draw_lvls(t_lvl **lvls, WINDOW *w, int count, int current) {
 }
 
 static void choose_lvl(WINDOW *w, t_lvl **lvls, int count) {
-    int choise = 0;
+    int choiсe = 0;
     int ch;
 
-    draw_lvls(lvls, w, count, choise);
+    draw_lvls(lvls, w, count, choiсe);
     while ((ch = wgetch(w))) {
         if (ch == KEY_UP) {
-            choise--;
-            choise = choise < 0 ? count - 1 : choise;
+            choiсe--;
+            choiсe = choiсe < 0 ? count - 1 : choiсe;
         }
         else if (ch == KEY_DOWN) {
-            choise++;
-            choise = choise >= count ? 0 : choise;
+            choiсe++;
+            choiсe = choiсe >= count ? 0 : choiсe;
         }
-        else if (ch == 10)
-            gameplay(&(lvls[0]), lvls[0]->map_h,lvls[0]->map_w );
+        else if (ch == 10) {
+            gameplay(&(lvls[choiсe]),
+                     lvls[choiсe]->map_h,
+                     lvls[choiсe]->map_w);
+        }
         else if (ch == 27)
             return;
-        draw_lvls(lvls, w, count, choise);
+        draw_lvls(lvls, w, count, choiсe);
     }
 }
 
