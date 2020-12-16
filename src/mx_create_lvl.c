@@ -22,6 +22,7 @@ t_lvl **mx_create_lvls() {
             char lvl_path[80];
             sprintf(lvl_path, "%s/%s", MX_LVL_DIR, entry->d_name);
             lvls[i] = mx_create_lvl(lvl_path);
+            lvls[i]->path = strdup(lvl_path);
             i++;
         }
     }

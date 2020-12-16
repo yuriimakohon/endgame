@@ -27,6 +27,8 @@ static void choose_lvl(WINDOW *w, t_lvl **lvls, int count) {
 
     draw_lvls(lvls, w, count, choiсe);
     while ((ch = wgetch(w))) {
+        int steps = 0;
+
         if (ch == KEY_UP) {
             choiсe--;
             choiсe = choiсe < 0 ? count - 1 : choiсe;
@@ -36,8 +38,13 @@ static void choose_lvl(WINDOW *w, t_lvl **lvls, int count) {
             choiсe = choiсe >= count ? 0 : choiсe;
         }
         else if (ch == 10) {
-            gameplay(lvls[choiсe]);
-            getch();
+            while ((steps = gameplay(lvls[choiсe]->path)) == -1);
+            clear();
+            refresh();
+            if (steps != -2) {
+                printw("POBEDA: %d", steps);
+                getch();
+            }
         }
         else if (ch == 27)
             return;

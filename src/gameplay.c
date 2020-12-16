@@ -1,11 +1,17 @@
 #include "level.h"
 
-void gameplay(t_lvl *level) {
+int gameplay(char *filename) {
+    clear();
+    refresh();
+
+    t_lvl *level = mx_create_lvl(filename);
     int y_max = level->map_h;
     int x_max = level->map_w;
 
     int y = level->player_pos[0];
     int x = level->player_pos[1];
+
+    int step_counter = 0;
 
     level -> map[y][x] = ' ';    // hide start position
 
@@ -49,10 +55,12 @@ void gameplay(t_lvl *level) {
                         if(level -> map[y+2][x] != '#' && !(check_box(level, y+2, x))) {
                             move_box(level,y+1,x,1,0);
                             y++;
+                            step_counter++;
                         }
                     }
                     else {
                         y++;
+                        step_counter++;
                     }
                 }
             }
@@ -64,10 +72,12 @@ void gameplay(t_lvl *level) {
                         if(level -> map[y-2][x] != '#' && !(check_box(level, y-2, x))) {
                             move_box(level,y-1,x,-1,0);
                             y--;
+                            step_counter++;
                         }
                     }
                     else {
                         y--;
+                        step_counter++;
                     }
                 }
             }
@@ -79,10 +89,12 @@ void gameplay(t_lvl *level) {
                         if(level -> map[y][x+2] != '#' && !(check_box(level, y, x+2))) {
                             move_box(level,y,x+1,0,1);
                             x++;
+                            step_counter++;
                         }
                     }
                     else {
                         x++;
+                        step_counter++;
                     }
                 }
             }
@@ -94,16 +106,21 @@ void gameplay(t_lvl *level) {
                         if(level -> map[y][x-2] != '#' && !(check_box(level, y, x-2))) {
                             move_box(level,y,x-1,0,-1);
                             x--;
+                            step_counter++;
                         }
                     }
                     else {
                         x--;
+                        step_counter++;
                     }
                 }
             }
         }
         if (ch == 'q') {
-            break;
+            return -2;
+        }
+        else if (ch == 'r') {
+            return -1;
         }
         btn_pushed = 0;
         for(int i = 0; level -> btn_pos[i]; i++) {
@@ -116,7 +133,14 @@ void gameplay(t_lvl *level) {
              break;
         }
     }
+    for (int i = 0; i < y_max; i++) {
+        for (int j = 0; j < x_max; j++) {
+            wmove(game_window, i, j);
+            waddch(game_window, ' ');
+        }
+    }
     delwin(game_window);
+    return step_counter;
 }
 
 bool check_btn(t_lvl *level, int y, int x) {

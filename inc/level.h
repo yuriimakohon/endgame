@@ -20,6 +20,7 @@
 #define MX_X                1
 
 typedef struct s_lvl {
+    char *path;
     char *name;
     char **map;
     int map_w;
@@ -36,7 +37,7 @@ void mx_fill_positions(char *filename, t_lvl **lvl);
 void mx_delete_lvl(t_lvl **lvl);
 void mx_delete_lvls(t_lvl ***lvl);
 
-void gameplay(t_lvl *level);
+int gameplay(char *filename);
 bool check_btn(t_lvl *level, int y, int x);
 bool check_box(t_lvl *level, int y, int x);
 void move_box(t_lvl *level, int y_now, int x_now, int y_step, int x_step);
