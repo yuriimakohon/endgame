@@ -36,4 +36,7 @@ void mx_fill_positions(char *filename, t_lvl **lvl);
 void mx_delete_lvl(t_lvl **lvl);
 void mx_delete_lvls(t_lvl ***lvl);
 
+
+void mx_show_main_menu(t_lvl **lvls);
+void mx_show_lvls_menu(t_lvl **lvls);
 void mx_print_lvl(t_lvl *lvl);  // TODO: Delete
