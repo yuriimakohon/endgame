@@ -2,7 +2,7 @@
 
 static void draw_logo() {
     int x = (getmaxx(stdscr) - 37) / 2;
-    int y = 5;
+    int y = (getmaxy(stdscr) - 32) / 2;
     getmaxy(stdscr);
     mvprintw(y + 0, x, " _____     _       _____     _       ");
     mvprintw(y + 1, x, "|   __|___| |_ ___| __  |_ _| |_ ___ ");

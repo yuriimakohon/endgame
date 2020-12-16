@@ -36,9 +36,8 @@ static void choose_lvl(WINDOW *w, t_lvl **lvls, int count) {
             choiсe = choiсe >= count ? 0 : choiсe;
         }
         else if (ch == 10) {
-            gameplay(&(lvls[choiсe]),
-                     lvls[choiсe]->map_h,
-                     lvls[choiсe]->map_w);
+            mx_print_lvl(lvls[choiсe]);
+            getch();
         }
         else if (ch == 27)
             return;
