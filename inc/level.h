@@ -22,6 +22,8 @@
 typedef struct s_lvl {
     char *name;
     char **map;
+    int map_w;
+    int map_h;
     int **box_pos;
     int **btn_pos;
     int player_pos[2];
