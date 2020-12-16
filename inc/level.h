@@ -22,6 +22,8 @@
 typedef struct s_lvl {
     char *name;
     char **map;
+    int map_w;
+    int map_h;
     int **box_pos;
     int **btn_pos;
     int player_pos[2];
@@ -41,5 +43,6 @@ void move_box(t_lvl **level, int y_now, int x_now, int y_step, int x_step);
 void hide_char(t_lvl **level, char c, int map_size_y, int map_size_x);
 
 
-
+void mx_show_main_menu(t_lvl **lvls);
+void mx_show_lvls_menu(t_lvl **lvls);
 void mx_print_lvl(t_lvl *lvl);  // TODO: Delete

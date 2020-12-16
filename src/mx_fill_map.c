@@ -14,17 +14,15 @@ static void get_map_size_from_fd(int fd, char ch, int *width, int *height) {
     mx_strdel(&map_size);
 }
 
-static char **read_map_from_fd(int fd, char ch) {
+static char **read_map_from_fd(int fd, char ch, int *height, int *width) {
     int i;
     int j;
-    int width;
-    int height;
     char **map = NULL;
 
-    get_map_size_from_fd(fd, ch, &width, &height);
-    map = malloc(sizeof(char*) * (height + 1));
-    for (i = 0; i < height; i++) {
-        map[i] = mx_strnew(width);
+    get_map_size_from_fd(fd, ch, width, height);
+    map = malloc(sizeof(char*) * (*height + 1));
+    for (i = 0; i < *height; i++) {
+        map[i] = mx_strnew(*width);
         for (j = 0; read(fd, &ch, 1) && ch !='\n'; j++)
             map[i][j] = ch;
     }
@@ -40,7 +38,7 @@ void mx_fill_map(int fd, t_lvl *lvl) {
         lvl->name = mx_strnew(MX_MAX_LVL_NAME);
         for (i = 0; i < MX_MAX_LVL_NAME && read(fd, &ch, 1) && ch != '\n'; i++)
             lvl->name[i] = ch;
-        lvl->map = read_map_from_fd(fd, ch);
+        lvl->map = read_map_from_fd(fd, ch, &(lvl->map_h), &(lvl->map_w));
         close(fd);
     }
     else {
