@@ -1,14 +1,23 @@
 #include "level.h"
 
 static void draw_logo() {
-    int x = (getmaxx(stdscr) - 37) / 2;
+    int x = (getmaxx(stdscr) - 39) / 2;
     int y = (getmaxy(stdscr) - 32) / 2;
+
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+
+    attron(COLOR_PAIR(1));
+
     getmaxy(stdscr);
-    mvprintw(y + 0, x, " _____     _       _____     _       ");
-    mvprintw(y + 1, x, "|   __|___| |_ ___| __  |_ _| |_ ___ ");
-    mvprintw(y + 2, x, "|__   | . | '_| . | __ -| | |  _| -_|");
-    mvprintw(y + 3, x, "|_____|___|_,_|___|_____|_  |_| |___|");
-    mvprintw(y + 4, x, "                        |___|        ");
+    mvprintw(y + 0, x, "   ____     __        ___       __     ");
+    mvprintw(y + 1, x, "  / __/__  / /_____  / _ )__ __/ /____ ");
+    mvprintw(y + 2, x, " _\\ \\/ _ \\/  '_/ _ \\/ _  / // / __/ -_)");
+    mvprintw(y + 3, x, "/___/\\___/_/\\_\\\\___/____/\\_, /\\__/\\__/ ");
+    mvprintw(y + 4, x, "                        /___/          ");
+
+    attroff(COLOR_PAIR(1));
+
     refresh();
 }
 
