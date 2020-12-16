@@ -28,12 +28,18 @@ static void parse_map(int fd, char ch, int pos_count, t_lvl **lvl) {
             (*lvl)->btn_pos[btn_idx] = malloc(sizeof(int) * 2);
             (*lvl)->btn_pos[btn_idx][MX_Y] = y;
             (*lvl)->btn_pos[btn_idx][MX_X] = x;
+            // printw("\n\n%s BTN:\n", ((*lvl)->name));
+            // printw("y:%d x:%d\n", (*lvl)->btn_pos[btn_idx][MX_Y], (*lvl)->btn_pos[btn_idx][MX_X]);
             btn_idx++;
         } else if (ch == MX_PLAYER_CHAR) {
             (*lvl)->player_pos[MX_Y] = y;
             (*lvl)->player_pos[MX_X] = x;
         }
     }
+    (*lvl)->box_pos[box_idx] = NULL;
+    (*lvl)->btn_pos[btn_idx] = NULL;
+    // printw("\n\n%s:\n", ((*lvl)->name));
+    // mx_print_lvl(*lvl);
 }
 
 void mx_fill_positions(char *filename, t_lvl **lvl) {
@@ -43,8 +49,8 @@ void mx_fill_positions(char *filename, t_lvl **lvl) {
     int i;
 
     if ((fd = open(filename, O_RDONLY))!= -1) {
-        (*lvl)->box_pos = malloc(sizeof(int) * box_count * box_count);
-        (*lvl)->btn_pos = malloc(sizeof(int) * box_count * box_count);
+        (*lvl)->box_pos = malloc(sizeof(int) * box_count * 8);
+        (*lvl)->btn_pos = malloc(sizeof(int) * box_count * 8);
         for (i = 0; read(fd, &ch, 1) && i < 3; i += ch == '\n' ? 1 : 0);
         parse_map(fd, ch, box_count, lvl);
         close(fd);

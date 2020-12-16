@@ -24,7 +24,7 @@ void gameplay(t_lvl *level) {
 
     for( ;; ) {
         for(int i=0; i<y_max; i++) {
-            for(int j=0; j<y_max; j++) {
+            for(int j=0; j<x_max; j++) {
                 wmove(game_window, i, j);
                 waddch(game_window, level -> map[i][j]);
             }

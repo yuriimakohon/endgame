@@ -36,6 +36,7 @@ static void choose_lvl(WINDOW *w, t_lvl **lvls, int count) {
             choiсe = choiсe >= count ? 0 : choiсe;
         }
         else if (ch == 10) {
+            // mx_print_lvl(lvls[choiсe]);
             gameplay(lvls[choiсe]);
             getch();
         }
@@ -48,7 +49,7 @@ static void choose_lvl(WINDOW *w, t_lvl **lvls, int count) {
 void mx_show_lvls_menu(t_lvl **lvls) {
     WINDOW *wlm = NULL; // window levels menu
     int wlm_w = 50;
-    int wlm_h = 10;
+    int wlm_h = 5;
     int count = 0;
 
     clear();
