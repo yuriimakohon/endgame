@@ -1,11 +1,15 @@
 #include "level.h"
 
 static void draw_logo() {
-    mvprintw(0, 1, " _____     _       _____     _       \n");
-    mvprintw(0, 2, "|   __|___| |_ ___| __  |_ _| |_ ___ \n");
-    mvprintw(0, 3, "|__   | . | '_| . | __ -| | |  _| -_|\n");
-    mvprintw(0, 4, "|_____|___|_,_|___|_____|_  |_| |___|\n");
-    mvprintw(0, 5, "                        |___|        \n");
+    int x = (getmaxx(stdscr) - 37) / 2;
+    int y = 5;
+    getmaxy(stdscr);
+    mvprintw(y + 0, x, " _____     _       _____     _       ");
+    mvprintw(y + 1, x, "|   __|___| |_ ___| __  |_ _| |_ ___ ");
+    mvprintw(y + 2, x, "|__   | . | '_| . | __ -| | |  _| -_|");
+    mvprintw(y + 3, x, "|_____|___|_,_|___|_____|_  |_| |___|");
+    mvprintw(y + 4, x, "                        |___|        ");
+    refresh();
 }
 
 static void draw_options(char **options, WINDOW *w, int current) {
@@ -13,7 +17,7 @@ static void draw_options(char **options, WINDOW *w, int current) {
     int y_pos = 0;
 
     for (int i = 0; options[i]; i++) {
-        x_pos = getmaxx(w) / 2 - strlen(options[i]) / 2;
+        x_pos = (getmaxx(w) - strlen(options[i])) / 2;
         y_pos = (getmaxy(w) / 3) * (1 + i);
         if (i == current) {
             wattron(w, A_STANDOUT);
@@ -24,6 +28,7 @@ static void draw_options(char **options, WINDOW *w, int current) {
             mvwprintw(w, y_pos, x_pos, options[i]);
     }
     box(w, 0, 0);
+    draw_logo();
     wrefresh(w);
 }
 
@@ -51,10 +56,9 @@ void mx_show_main_menu(t_lvl **lvls) {
     int wmm_w = 50;
     int wmm_h = 20;
 
-    draw_logo();
     wmm = newwin(wmm_h, wmm_w,
-                 getmaxy(stdscr) / 2 - wmm_h / 2,
-                 getmaxx(stdscr) / 2 - wmm_w / 2);
+                 (getmaxy(stdscr) - wmm_h) / 2,
+                 (getmaxx(stdscr) - wmm_w) / 2);
     keypad(wmm, true);
     wrefresh(wmm);
     choose_option(lvls, wmm);

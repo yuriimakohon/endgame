@@ -49,9 +49,10 @@ void mx_show_lvls_menu(t_lvl **lvls) {
     int wlm_h = 10;
     int count = 0;
 
+    clear();
+    refresh();
     for (; lvls[count]; count++);
     wlm_h *= count;
-
     wlm = newwin(wlm_h, wlm_w,
                  getmaxy(stdscr) / 2 - wlm_h / 2,
                  getmaxx(stdscr) / 2 - wlm_w / 2);
